@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jhinno Frontend SDK - Dev</title>
+  </head>
+  <body>
+    <h1>Jhinno Frontend SDK 开发调试</h1>
+
+    <div
+      style="
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      "
+    >
+      <form
+        id="testForm"
+        style="display: flex; flex-direction: column; gap: 15px"
+      >
+        <div>
+          <label
+            for="jhappurl"
+            style="display: block; margin-bottom: 5px; font-weight: bold"
+            >JHAPPURL:</label
+          >
+          <textarea
+            type="text"
+            id="jhappurl"
+            name="jhappurl"
+            style="
+              width: 100%;
+              padding: 8px;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+            "
+            rows="10"
+            placeholder="请输入 JHAPPURL"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          style="
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+          "
+        >
+          启动会话
+        </button>
+      </form>
+    </div>
+
+    <!-- <script type="module" src="./mian.ts"></script> -->
+
+    <!-- <script src="./dist/jhinno-frontend-sdk.umd.js"></script>
+    <script>
+      const { JHSessionClient } = JhinnoFrontendSDK;
+      const testForm = document.getElementById("testForm");
+      const client = new JHSessionClient();
+
+      testForm.onsubmit = (e) => {
+        e.preventDefault(); // 阻止表单默认提交行为，避免页面跳转
+
+        const jhappurlInput = document.getElementById("jhappurl");
+        client.startClient(jhappurlInput.value).catch((error) => {
+          alert(error.message || "启动失败");
+        });
+      };
+    </script> -->
+
+    <script type="module">
+      import { JHSessionClient } from "./dist/jhinno-frontend-sdk.es.js";
+      const testForm = document.getElementById("testForm");
+      const client = new JHSessionClient();
+
+      testForm.onsubmit = (e) => {
+        e.preventDefault(); // 阻止表单默认提交行为，避免页面跳转
+
+        const jhappurlInput = document.getElementById("jhappurl");
+        client.startClient(jhappurlInput.value).catch((error) => {
+          alert(error.message || "启动失败");
+        });
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+{
+  "name": "@jhinno/frontend-sdk",
+  "version": "1.0.0",
+  "description": "景行前端集成SDK",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "main": "./dist/jhinno-frontend-sdk.cjs.js",
+  "module": "./dist/jhinno-frontend-sdk.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/jhinno-frontend-sdk.es.js",
+      "require": "./dist/jhinno-frontend-sdk.cjs.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "sdk",
+    "frontend",
+    "jhinno",
+    "景行锐创"
+  ],
+  "repository": {
+    "url": "git+https://github.com/yanlongqi/jhinno-frontend-sdk.git"
+  },
+  "author": "lqyan",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.2",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

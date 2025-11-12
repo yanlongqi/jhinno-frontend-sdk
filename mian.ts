@@ -1,4 +1,4 @@
-import { JHSessionClient } from "./src";
+import { JHSessionClient, downloadPkg } from "./src";
 
 window.onload = () => {
   const testForm = document.querySelectorAll("#testForm")[0];
@@ -18,5 +18,12 @@ window.onload = () => {
     } catch (e: any) {
       alert(e.message);
     }
+  };
+
+  const download = document.querySelector("#download") as HTMLButtonElement;
+  download.onclick = () => {
+    downloadPkg(
+      "https://192.168.41.12/appform/downloadPkg?filename=JH_Client_V6.6_Win_x86_r51104.exe"
+    );
   };
 };

@@ -57,9 +57,25 @@
           启动会话
         </button>
       </form>
+
+      <button
+        style="
+          padding: 10px 20px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+          margin-top: 16px;
+        "
+        id="download"
+      >
+        下载客户端
+      </button>
     </div>
 
-    <!-- <script type="module" src="./mian.ts"></script> -->
+    <script type="module" src="./mian.ts"></script>
 
     <!-- <script src="./dist/jhinno-frontend-sdk.umd.js"></script>
     <script>
@@ -77,7 +93,7 @@
       };
     </script> -->
 
-    <script type="module">
+    <!-- <script type="module">
       import { JHSessionClient } from "./dist/jhinno-frontend-sdk.es.js";
       const testForm = document.getElementById("testForm");
       const client = new JHSessionClient();
@@ -90,6 +106,6 @@
           alert(error.message || "启动失败");
         });
       };
-    </script>
+    </script>-->
   </body>
 </html>

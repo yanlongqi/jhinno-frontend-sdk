@@ -40,10 +40,26 @@ const client = new JHSessionClient();
 
 // 启动客户端
 try {
-  await client.startClient("jhclient://your-encrypted-params");
-  console.log("客户端启动成功");
+  await client.startClient("jhclient://xxxxx");
 } catch (error) {
-  console.error("客户端启动失败:", error);
+  if (error instanceof ClientError) {
+    switch (error.code) {
+      case ClientErrorCode.NOT_INSTALLED:
+        alert("请先下载并安装客户端应用");
+        break;
+      case ClientErrorCode.DECRYPT_FAILED:
+        console.error("参数解密失败，请检查加密参数是否正确");
+        break;
+      case ClientErrorCode.PARAMS_EXPIRED:
+        console.error("启动参数已过期，请重新获取");
+        break;
+      case ClientErrorCode.ENCRYPT_EMPTY:
+        console.error("缺少必需的加密参数");
+        break;
+      default:
+        console.error("未知错误:", error.message);
+    }
+  }
 }
 ```
 
@@ -109,7 +125,52 @@ const options: JHSessionOption = {
 const client = new JHSessionClient(options);
 ```
 
-## API 文档
+## API 方法列表
+
+### 核心类
+
+| 类名/方法               | 说明           | 参数               | 返回值            |
+| ----------------------- | -------------- | ------------------ | ----------------- |
+| **JHSessionClient**     | 客户端管理类   |                    |                   |
+| `constructor(option?)`  | 创建客户端实例 | `JHSessionOption?` | `JHSessionClient` |
+| `startClient(jhappUrl)` | 启动客户端应用 | `string`           | `Promise<void>`   |
+
+### 工具函数
+
+| 函数名                                | 说明               | 参数      | 返回值   |
+| ------------------------------------- | ------------------ | --------- | -------- |
+| `getCurrentTimestamp(offsetSeconds?)` | 获取格式化的时间戳 | `number?` | `string` |
+| `downloadPkg(downloadUrl)`            | 下载安装包         | `string`  | `void`   |
+
+### 类型定义
+
+| 类型名                | 说明               |
+| --------------------- | ------------------ |
+| **JHSessionOption**   | 客户端配置选项     |
+| **StartClientParams** | 启动客户端所需参数 |
+| **ClientError**       | 客户端错误类       |
+| **ClientErrorCode**   | 客户端错误代码枚举 |
+
+### 导入示例
+
+```typescript
+import {
+  // 核心类
+  JHSessionClient,
+
+  // 工具函数
+  getCurrentTimestamp,
+  downloadPkg,
+
+  // 类型定义
+  JHSessionOption,
+  StartClientParams,
+  ClientError,
+  ClientErrorCode,
+} from "@jhinno/frontend-sdk";
+```
+
+## API 详细文档
 
 ### JHSessionClient
 
@@ -253,6 +314,40 @@ console.log(now); // '20251112104456'
 // 获取30秒后的时间
 const future = getCurrentTimestamp(30);
 console.log(future); // '20251112104526'
+```
+
+### downloadPkg
+
+下载客户端安装包。
+
+```typescript
+function downloadPkg(downloadUrl: string): void;
+```
+
+**参数：**
+
+- `downloadUrl`: 安装包的下载地址
+
+**功能说明：**
+
+该函数通过创建隐藏的 form 表单并自动提交来触发文件下载。适用于需要下载 JHClient 客户端安装包的场景。
+
+**示例：**
+
+```typescript
+import { downloadPkg, ClientError, ClientErrorCode, JHSessionClient } from "@jhinno/frontend-sdk";
+
+const client = new JHSessionClient();
+
+try {
+  await client.startClient("jhclient://xxxxx");
+} catch (error) {
+  if (error instanceof ClientError && error.code === ClientErrorCode.NOT_INSTALLED) {
+    // 客户端未安装，引导用户下载
+    alert("检测到客户端未安装，即将开始下载...");
+    downloadPkg("https://example.com/download/jhclient-setup.exe");
+  }
+}
 ```
 
 ## 启动方式

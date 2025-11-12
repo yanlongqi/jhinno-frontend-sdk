@@ -1,6 +1,6 @@
 {
   "name": "@jhinno/frontend-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "景行前端集成SDK",
   "type": "module",
   "scripts": {
